@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Events & Achievement Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #f5f7ff;
+            color: #222;
+            line-height: 1.6;
+        }
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #4b0082, #7b2cbf, #4361ee);
+            color: white;
+            padding: 18px 7%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .logo span {
+            color: #ffd166;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 22px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        nav a:hover {
+            color: #ffd166;
+        }
+        /* Hero */
+        .hero {
+            min-height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 8%;
+            background:
+                linear-gradient(rgba(37, 18, 84, 0.75), rgba(30, 55, 120, 0.75)),
+                url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        .hero-content {
+            max-width: 850px;
+        }
+        .hero h1 {
+            font-size: 50px;
+            margin-bottom: 18px;
+        }
+        .hero h1 span {
+            color: #ffd166;
+        }
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 28px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 13px 28px;
+            background: #ffd166;
+            color: #222;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 5px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: white;
+            transform: translateY(-3px);
+        }
+        section {
+            padding: 70px 7%;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+        .section-title h2 {
+            font-size: 35px;
+            color: #4b0082;
+            margin-bottom: 10px;
+        }
+        .section-title p {
+            color: #666;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: -50px;
+            position: relative;
+        }
+        .stat-card {
+            background: white;
+            padding: 28px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .stat-card h2 {
+            font-size: 35px;
+            color: #4361ee;
+        }
+        .stat-card p {
+            color: #666;
+            font-weight: bold;
+        }
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.09);
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        .card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 22px;
+        }
+        .card-content h3 {
+            color: #4b0082;
+            margin-bottom: 10px;
+        }
+        .card-content p {
+            color: #666;
+            margin-bottom: 12px;
+        }
+        .tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #e9ddff;
+            color: #5a189a;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        #achievements {
+            background: #eef1ff;
+        }
+        .certificate {
+            border-left: 5px solid #4361ee;
+        }
+        .placement {
+            border-left: 5px solid #06a77d;
+        }
+        .company {
+            font-weight: bold;
+            color: #06a77d;
+            font-size: 18px;
+        }
+        .award {
+            border-left: 5px solid #f77f00;
+        }
+        .award-icon {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+        .event {
+            border-left: 5px solid #e63946;
+        }
+        .event-date {
+            color: #e63946;
+            font-weight: bold;
+        }
+        .contact {
+            background: linear-gradient(135deg, #4b0082, #4361ee);
+            color: white;
+            text-align: center;
+        }
+        .contact h2 {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+        .contact p {
+            margin: 8px;
+        }
+        footer {
+            background: #17122b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+        footer span {
+            color: #ffd166;
+        }
+        @media (max-width: 900px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+        }
+        @media (max-width: 600px) {
+            .navbar {
+                justify-content: center;
+                gap: 15px;
+            }
+            nav {
+                margin-top: 10px;
+                text-align: center;
+            }
+            nav a {
+                margin: 5px;
+                display: inline-block;
+                font-size: 14px;
+            }
+            .stats,
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                min-height: 450px;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            section {
+                padding: 50px 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <div class="logo">
+            Dept<span>Achieve</span>
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#achievements">Achievements</a>
+            <a href="#certifications">Certifications</a>
+            <a href="#placements">Placements</a>
+            <a href="#awards">Awards</a>
+            <a href="#events">Events</a>
+        </nav>
+    </div>
+</header>
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Department <span>Events & Achievement</span> Portal</h1>
+        <p>
+            Celebrating the achievements, certifications, placements,
+            awards and memorable events of our students.
+        </p>
+        <a href="#achievements" class="btn">Explore Achievements</a>
+        <a href="#events" class="btn">View Events</a>
+    </div>
+</section>
+<section>
+    <div class="stats">
+        <div class="stat-card">
+            <h2>250+</h2>
+            <p>Student Achievements</p>
+        </div>
+        <div class="stat-card">
+            <h2>180+</h2>
+            <p>Certifications</p>
+        </div>
+        <div class="stat-card">
+            <h2>95+</h2>
+            <p>Placements</p>
+        </div>
+        <div class="stat-card">
+            <h2>60+</h2>
+            <p>Awards</p>
+        </div>
+    </div>
+</section>
+<section id="achievements">
+    <div class="section-title">
+        <h2>🏆 Student Achievements</h2>
+        <p>Outstanding accomplishments by our students</p>
+    </div
+    <div class="cards">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=900&q=80">
+            <div class="card-content">
+                <h3>Hackathon Winner</h3>
+                <p>
+                    Students secured first place in a national-level
+                    technology hackathon.
+                </p>
+                <span class="tag">Hackathon</span>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80">
+
+            <div class="card-content">
+                <h3>Research Excellence</h3>
+                <p>
+                    Students presented innovative research projects
+                    at a national conference.
+                </p>
+                <span class="tag">Research</span>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80">
+
+            <div class="card-content">
+                <h3>Academic Excellence</h3>
+                <p>
+                    Department students achieved outstanding academic
+                    performance.
+                </p>
+                <span class="tag">Academics</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section id="certifications">
+
+    <div class="section-title">
+        <h2>📜 Certifications</h2>
+        <p>Professional and technical certifications earned by students</p>
+    </div>
+    <div class="cards">
+        <div class="card certificate">
+            <div class="card-content">
+                <h3>Python Programming</h3>
+                <p>
+                    Students successfully completed professional
+                    Python programming certification.
+                </p>
+                <span class="tag">Python</span>
+            </div>
+        </div>
+        <div class="card certificate">
+            <div class="card-content">
+                <h3>Cloud Computing</h3>
+                <p>
+                    Certification completed in cloud technologies
+                    and computing fundamentals.
+                </p>
+                <span class="tag">Cloud</span>
+            </div>
+        </div>
+        <div class="card certificate">
+            <div class="card-content">
+                <h3>Artificial Intelligence</h3>
+                <p>
+                    Students completed an AI and Machine Learning
+                    certification program.
+                </p>
+                <span class="tag">AI & ML</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Placements -->
+<section id="placements" style="background:#eefaf6;">
+    <div class="section-title">
+        <h2>💼 Placements</h2>
+        <p>Celebrating our students' successful career journeys</p>
+    </div>
+    <div class="cards">
+        <div class="card placement">
+            <div class="card-content">
+                <h3>Software Developer</h3>
+                <p class="company">Tech Solutions Pvt. Ltd.</p>
+                <p>
+                    Student selected for the Software Developer
+                    position through campus recruitment.
+                </p>
+                <span class="tag">Placed</span>
+            </div>
+        </div>
+        <div class="card placement">
+            <div class="card-content">
+                <h3>Data Analyst</h3>
+                <p class="company">Global Technologies</p>
+                <p>
+                    Student selected for a Data Analyst role
+                    through the placement drive.
+                </p>
+                <span class="tag">Placed</span>
+            </div>
+        </div>
+        <div class="card placement">
+            <div class="card-content">
+                <h3>AI Engineer</h3>
+                <p class="company">Innovation Labs</p>
+                <p>
+                    Student successfully selected for an
+                    Artificial Intelligence engineering role.
+                </p>
+                <span class="tag">Placed</span>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="awards">
+    <div class="section-title">
+        <h2>🥇 Awards & Recognition</h2>
+        <p>Recognizing excellence and innovation</p>
+    </div>
+    <div class="cards">
+        <div class="card award">
+            <div class="card-content">
+                <div class="award-icon">🏅</div>
+                <h3>Best Student Award</h3>
+                <p>
+                    Award presented to students for exceptional
+                    academic and extracurricular performance.
+                </p>
+                <span class="tag">2026</span>
+            </div>
+        </div>
+        <div class="card award">
+            <div class="card-content">
+                <div class="award-icon">🏆</div>
+                <h3>Innovation Award</h3>
+                <p>
+                    Award received for developing an innovative
+                    technology-based solution.
+                </p>
+                <span class="tag">Innovation</span>
+            </div>
+        </div>
+        <div class="card award">
+            <div class="card-content">
+                <div class="award-icon">🌟</div>
+                <h3>Leadership Award</h3>
+                <p>
+                    Recognition for outstanding leadership and
+                    contribution to department activities.
+                </p>
+                <span class="tag">Leadership</span>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="events" style="background:#fff4f4;">
+
+    <div class="section-title">
+        <h2>📅 Department Events</h2>
+        <p>Upcoming and memorable department activities</p>
+    </div>
+    <div class="cards">
+        <div class="card event">
+            <div class="card-content">
+                <p class="event-date">15 October 2026</p>
+                <h3>Technical Fest</h3>
+                <p>
+                    A technical festival featuring coding contests,
+                    project exhibitions and innovation challenges.
+                </p>
+                <span class="tag">Technical Event</span>
+            </div>
+        </div>
+        <div class="card event">
+            <div class="card-content">
+                <p class="event-date">25 October 2026</p>
+                <h3>Career Guidance Program</h3>
+                <p>
+                    Industry experts provide guidance on careers,
+                    internships and placement preparation.
+                </p>
+                <span class="tag">Career</span>
+            </div>
+        </div>
+        <div class="card event">
+            <div class="card-content">
+                <p class="event-date">05 November 2026</p>
+                <h3>Project Expo</h3>
+                <p>
+                    Students showcase innovative projects and
+                    real-world technology solutions.
+                </p>
+                <span class="tag">Project Expo</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="contact">
+    <h2>Department of Information Technology</h2>
+    <p>
+        Celebrating Innovation • Excellence • Success
+    </p>
+    <p>
+        📧 Email: itdepartment@university.edu
+    </p>
+
+    <p>
+        📍 Department of Information Technology, University Campus
+    </p>
+
+</section>
+<footer>
+    <p>
+        © 2026 <span>Department Events & Achievement Portal</span>
+        | All Rights Reserved
+    </p>
+</footer>
+</body>
+</html>
+
